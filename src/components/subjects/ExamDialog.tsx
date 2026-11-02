@@ -8,8 +8,8 @@ import { createExam } from '@/services/subjects';
 import { toUserMessage } from '@/lib/errors';
 import { todayIso } from '@/lib/format';
 
-const DURATION_OPTIONS = [30, 45, 60, 90, 120, 150, 180];
 const DEFAULT_DURATION = 90;
+const MAX_DURATION = 1440;
 
 type ExamDialogProps = {
   open: boolean;
@@ -25,7 +25,7 @@ export function ExamDialog({ open, onClose, presetSubjectId = null, onSaved }: E
   const [periodId, setPeriodId] = useState('');
   const [examDate, setExamDate] = useState('');
   const [startTime, setStartTime] = useState('');
-  const [duration, setDuration] = useState(DEFAULT_DURATION);
+  const [duration, setDuration] = useState(String(DEFAULT_DURATION));
   const [title, setTitle] = useState('');
   const [error, setError] = useState<string | null>(null);
   const [saving, setSaving] = useState(false);
@@ -36,7 +36,7 @@ export function ExamDialog({ open, onClose, presetSubjectId = null, onSaved }: E
     setPeriodId('');
     setExamDate('');
     setStartTime('');
-    setDuration(DEFAULT_DURATION);
+    setDuration(String(DEFAULT_DURATION));
     setTitle('');
     setError(null);
   }, [open, presetSubjectId, data.subjects]);
@@ -51,6 +51,11 @@ export function ExamDialog({ open, onClose, presetSubjectId = null, onSaved }: E
       setError('Kies de datum van het examen.');
       return;
     }
+    const durationMinutes = Number(duration);
+    if (!Number.isInteger(durationMinutes) || durationMinutes < 1 || durationMinutes > MAX_DURATION) {
+      setError(`Vul een duur in minuten in tussen 1 en ${MAX_DURATION}.`);
+      return;
+    }
 
     setSaving(true);
     setError(null);
@@ -60,7 +65,7 @@ export function ExamDialog({ open, onClose, presetSubjectId = null, onSaved }: E
         exam_period_id: periodId || null,
         exam_date: examDate,
         start_time: startTime || null,
-        duration_minutes: duration,
+        duration_minutes: durationMinutes,
         title: title.trim() || null,
       });
       await refresh();
@@ -115,14 +120,17 @@ export function ExamDialog({ open, onClose, presetSubjectId = null, onSaved }: E
             <Field label="Examenuur" htmlFor="exam-time" hint="Optioneel">
               <input id="exam-time" type="time" value={startTime} onChange={(event) => setStartTime(event.target.value)} className={inputClass} />
             </Field>
-            <Field label="Duur" htmlFor="exam-duration">
-              <select id="exam-duration" value={duration} onChange={(event) => setDuration(Number(event.target.value))} className={inputClass}>
-                {DURATION_OPTIONS.map((minutes) => (
-                  <option key={minutes} value={minutes}>
-                    {minutes} minuten
-                  </option>
-                ))}
-              </select>
+            <Field label="Duur (minuten)" htmlFor="exam-duration">
+              <input
+                id="exam-duration"
+                type="number"
+                inputMode="numeric"
+                min={1}
+                max={MAX_DURATION}
+                value={duration}
+                onChange={(event) => setDuration(event.target.value)}
+                className={inputClass}
+              />
             </Field>
             <Field label="Examenperiode" htmlFor="exam-period" hint="Optioneel">
               <select id="exam-period" value={periodId} onChange={(event) => setPeriodId(event.target.value)} className={inputClass}>
