@@ -1,5 +1,6 @@
 import { useState, type FormEvent } from 'react';
-import { ArrowRight, BookOpen, CalendarCheck, GraduationCap, Sparkles } from 'lucide-react';
+import { BrandMark } from '@/components/ui/BrandMark';
+import { ArrowRight, BookOpen, CalendarCheck, Sparkles } from 'lucide-react';
 import { AuthHeroShapes } from '@/components/auth/AuthHeroShapes';
 import { TestLabPanel, isTestLabLogin } from '@/components/auth/TestLabPanel';
 import { Button } from '@/components/ui/Button';
@@ -64,7 +65,7 @@ export function AuthPage() {
       <aside className="relative hidden overflow-hidden border-r-[3px] border-outline bg-panel p-12 text-ink lg:flex lg:flex-col lg:justify-between">
         <div className="relative flex items-center gap-3">
           <div className="flex h-10 w-10 items-center justify-center rounded-xl border-[3px] border-outline bg-accent-600 shadow-hard-sm">
-            <GraduationCap className="h-5 w-5 text-white" />
+            <BrandMark className="h-5 w-5 text-white" />
           </div>
           <span className="text-lg font-bold tracking-tight">StudyFloow</span>
         </div>
@@ -92,7 +93,7 @@ export function AuthPage() {
         <div className="w-full max-w-sm animate-fade-in">
           <div className="mb-8 flex items-center gap-3 lg:hidden">
             <div className="flex h-10 w-10 items-center justify-center rounded-xl border-[3px] border-outline bg-accent-600 shadow-hard-sm">
-              <GraduationCap className="h-5 w-5 text-white" />
+              <BrandMark className="h-5 w-5 text-white" />
             </div>
             <span className="text-lg font-semibold tracking-tight">StudyFloow</span>
           </div>

@@ -27,6 +27,7 @@ import { navigate } from '@/lib/router';
 import { signOutUser } from '@/lib/auth';
 import { toUserMessage } from '@/lib/errors';
 import { useStudyData } from '@/contexts/StudyDataContext';
+import { BrandMark } from '@/components/ui/BrandMark';
 import { useToast } from '@/components/ui/Toast';
 
 type NavItem = { key: string; label: string; icon: LucideIcon; path: string };
@@ -102,7 +103,7 @@ export function Sidebar({ activePage, collapsed, onToggleCollapsed, mobileOpen, 
             aria-label="Naar dashboard"
           >
             <span className="flex h-10 w-10 shrink-0 items-center justify-center rounded-xl border-[3px] border-outline bg-accent-600 shadow-hard-sm transition-transform duration-300 group-hover:-rotate-6 group-hover:scale-105 group-active:scale-95">
-              <GraduationCap className="h-5 w-5 text-white" />
+              <BrandMark className="h-5 w-5 text-white" />
             </span>
             {!collapsed && <span className="text-base font-semibold tracking-tight text-neutral-900 dark:text-neutral-50">StudyFloow</span>}
           </button>

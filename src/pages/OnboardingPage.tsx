@@ -1,5 +1,6 @@
 import { useState } from 'react';
-import { ArrowLeft, ArrowRight, Check, Clock, GraduationCap, Plus, Trash2, UserRound, CalendarDays, BookOpen } from 'lucide-react';
+import { ArrowLeft, ArrowRight, Check, Clock, Plus, Trash2, UserRound, CalendarDays, BookOpen } from 'lucide-react';
+import { BrandMark } from '@/components/ui/BrandMark';
 import { useAuth } from '@/contexts/AuthContext';
 import { useStudyData } from '@/contexts/StudyDataContext';
 import { Button } from '@/components/ui/Button';
@@ -275,7 +276,7 @@ export function OnboardingPage() {
         <div className="space-y-6">
           <div className="flex items-center gap-2.5">
             <span className="flex h-9 w-9 items-center justify-center rounded-2xl border-outline bg-accent-600 text-white shadow-hard-sm dark:bg-accent-500">
-              <GraduationCap className="h-5 w-5" />
+              <BrandMark className="h-5 w-5" />
             </span>
             <span className="text-lg font-semibold tracking-tight text-neutral-900 dark:text-neutral-50">StudyFloow</span>
           </div>
