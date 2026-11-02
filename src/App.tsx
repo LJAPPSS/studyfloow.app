@@ -18,6 +18,7 @@ import { StatisticsPage } from '@/pages/StatisticsPage';
 import { StudyEnvironmentPage } from '@/pages/StudyEnvironmentPage';
 import { GradesPage } from '@/pages/GradesPage';
 import { NotesPage } from '@/pages/NotesPage';
+import { TasksPage } from '@/pages/TasksPage';
 import { GroupsPage } from '@/pages/GroupsPage';
 import { GuidedTour } from '@/components/tour/GuidedTour';
 import { DonationQrPrompt } from '@/components/donation/DonationQrPrompt';
@@ -68,6 +69,8 @@ function AppRoutes() {
     content = <GradesPage />;
   } else if (activePage === 'notities') {
     content = <NotesPage />;
+  } else if (activePage === 'huiswerk') {
+    content = <TasksPage />;
   } else if (activePage === 'groepen') {
     content = <GroupsPage />;
   } else {

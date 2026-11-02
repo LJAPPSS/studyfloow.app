@@ -92,6 +92,15 @@ export type SubjectNote = {
   body: string;
 };
 
+export type Task = {
+  id: string;
+  subject_id: string | null;
+  title: string;
+  due_date: string | null;
+  completed: boolean;
+  created_at: string;
+};
+
 export type StudyGroup = {
   id: string;
   name: string;
