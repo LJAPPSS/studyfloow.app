@@ -28,7 +28,7 @@ type DraftSubject = { key: string; name: string; color: SubjectColorKey; difficu
 type DraftExam = { key: string; subjectKey: string; date: string; startTime: string; duration: number };
 type DraftBlock = { key: string; weekday: number; start: string; end: string; label: string };
 
-const DURATIONS = [30, 45, 60, 90, 120, 150, 180];
+const MAX_EXAM_DURATION = 1440;
 const RATINGS = [1, 2, 3, 4, 5] as const;
 
 function newKey(): string {
@@ -486,13 +486,7 @@ export function OnboardingPage() {
                           <input id={`exam-time-${exam.key}`} type="time" value={exam.startTime} onChange={(event) => updateExam(exam.key, { startTime: event.target.value })} className={inputClass} />
                         </Field>
                         <Field label="Duur" htmlFor={`exam-duration-${exam.key}`}>
-                          <select id={`exam-duration-${exam.key}`} value={exam.duration} onChange={(event) => updateExam(exam.key, { duration: Number(event.target.value) })} className={inputClass}>
-                            {DURATIONS.map((minutes) => (
-                              <option key={minutes} value={minutes}>
-                                {minutes} min
-                              </option>
-                            ))}
-                          </select>
+                          <input id={`exam-duration-${exam.key}`} type="number" inputMode="numeric" min={1} max={MAX_EXAM_DURATION} value={exam.duration} onChange={(event) => updateExam(exam.key, { duration: Math.min(MAX_EXAM_DURATION, Math.max(1, Number(event.target.value) || 1)) })} className={inputClass} />
                         </Field>
                         <button
                           type="button"
