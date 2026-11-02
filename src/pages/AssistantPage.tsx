@@ -2,8 +2,10 @@ import { useEffect, useRef, useState, type FormEvent, type KeyboardEvent } from 
 import { Bot, Send, User } from 'lucide-react';
 import { Button } from '@/components/ui/Button';
 import { inputClass } from '@/components/ui/Field';
+import { useStudyData } from '@/contexts/StudyDataContext';
 import { cn } from '@/lib/cn';
 import { toUserMessage } from '@/lib/errors';
+import { todayIso } from '@/lib/format';
 import { askAssistant, type AssistantMessage } from '@/services/assistant';
 
 const SUGGESTIONS = [
@@ -13,6 +15,7 @@ const SUGGESTIONS = [
 ];
 
 export function AssistantPage() {
+  const { data } = useStudyData();
   const [messages, setMessages] = useState<AssistantMessage[]>([]);
   const [draft, setDraft] = useState('');
   const [sending, setSending] = useState(false);
@@ -32,7 +35,7 @@ export function AssistantPage() {
     setSending(true);
     setError(null);
     try {
-      const reply = await askAssistant(next);
+      const reply = await askAssistant(next, { today: todayIso(), region: data.profile?.school_region ?? null });
       setMessages((current) => [...current, { role: 'assistant', content: reply }]);
     } catch (err) {
       setError(toUserMessage(err, 'De AI-assistent gaf geen antwoord. Probeer het opnieuw.'));

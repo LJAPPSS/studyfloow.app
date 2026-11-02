@@ -14,6 +14,7 @@ import { navigate } from '@/lib/router';
 import { applyStyle, applyTheme, getStoredStyle, getStoredTheme, type DesignStyle, type Theme } from '@/lib/theme';
 import { deleteAccount } from '@/services/account';
 import { saveProfile } from '@/services/profile';
+import type { SchoolRegion } from '@/types/study';
 
 const TABS = [
   { id: 'profiel', label: 'Profiel', icon: UserRound },
@@ -85,6 +86,12 @@ function SettingsCard({ title, description, children }: { title: string; descrip
   );
 }
 
+const SCHOOL_REGIONS: { value: SchoolRegion; label: string }[] = [
+  { value: 'noord', label: 'Regio Noord' },
+  { value: 'midden', label: 'Regio Midden' },
+  { value: 'zuid', label: 'Regio Zuid' },
+];
+
 function ProfilePanel() {
   const { userId, data, refresh } = useStudyData();
   const { show } = useToast();
@@ -92,6 +99,7 @@ function ProfilePanel() {
   const [displayName, setDisplayName] = useState(profile?.display_name ?? '');
   const [schoolLevel, setSchoolLevel] = useState<string>(profile?.school_level ?? SCHOOL_LEVELS[0]);
   const [schoolGrade, setSchoolGrade] = useState<number>(profile?.school_grade ?? 1);
+  const [schoolRegion, setSchoolRegion] = useState<SchoolRegion | ''>(profile?.school_region ?? '');
   const [error, setError] = useState<string | null>(null);
   const [saving, setSaving] = useState(false);
 
@@ -99,6 +107,7 @@ function ProfilePanel() {
     setDisplayName(profile?.display_name ?? '');
     setSchoolLevel(profile?.school_level ?? SCHOOL_LEVELS[0]);
     setSchoolGrade(profile?.school_grade ?? 1);
+    setSchoolRegion(profile?.school_region ?? '');
   }, [profile]);
 
   const handleSubmit = async (event: FormEvent<HTMLFormElement>) => {
@@ -110,7 +119,7 @@ function ProfilePanel() {
     setSaving(true);
     setError(null);
     try {
-      await saveProfile(userId, { display_name: displayName, school_level: schoolLevel, school_grade: schoolGrade });
+      await saveProfile(userId, { display_name: displayName, school_level: schoolLevel, school_grade: schoolGrade, school_region: schoolRegion || null });
       await refresh();
       show('Profiel opgeslagen.');
     } catch (err) {
@@ -146,6 +155,16 @@ function ProfilePanel() {
             </select>
           </Field>
         </div>
+        <Field label="Schoolvakantie-regio" htmlFor="profile-region" hint="Zo weet de studieassistent wanneer je vakantie hebt">
+          <select id="profile-region" value={schoolRegion} onChange={(event) => setSchoolRegion(event.target.value as SchoolRegion | '')} className={inputClass}>
+            <option value="">Nog niet ingesteld</option>
+            {SCHOOL_REGIONS.map((region) => (
+              <option key={region.value} value={region.value}>
+                {region.label}
+              </option>
+            ))}
+          </select>
+        </Field>
         <div className="flex justify-end pt-2">
           <Button type="submit" loading={saving}>
             Opslaan

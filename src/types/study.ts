@@ -1,10 +1,13 @@
 import type { SubjectColorKey } from '@/lib/constants';
 
+export type SchoolRegion = 'noord' | 'midden' | 'zuid';
+
 export type Profile = {
   user_id: string;
   display_name: string;
   school_level: string | null;
   school_grade: number | null;
+  school_region: SchoolRegion | null;
   onboarding_completed: boolean;
   tour_completed: boolean;
   weekly_goal_minutes: number | null;

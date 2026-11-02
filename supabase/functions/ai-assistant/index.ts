@@ -1,3 +1,5 @@
+import { SCHOOL_HOLIDAYS, type SchoolRegion } from "./holidays.ts";
+
 const corsHeaders = {
   "Access-Control-Allow-Origin": "*",
   "Access-Control-Allow-Methods": "GET, POST, PUT, DELETE, OPTIONS",
@@ -15,12 +17,49 @@ const SYSTEM_PROMPT =
   "maken zonder uitleg te geven.";
 
 type IncomingMessage = { role: "user" | "assistant"; content: string };
+type IncomingContext = { today: string; region: SchoolRegion | null };
+
+const REGION_LABELS: Record<SchoolRegion, string> = { noord: "Noord", midden: "Midden", zuid: "Zuid" };
+const MONTHS = ["januari", "februari", "maart", "april", "mei", "juni", "juli", "augustus", "september", "oktober", "november", "december"];
+const ISO_DATE = /^\d{4}-\d{2}-\d{2}$/;
 
 function json(body: unknown, status = 200): Response {
   return new Response(JSON.stringify(body), {
     status,
     headers: { ...corsHeaders, "Content-Type": "application/json" },
   });
+}
+
+function parseContext(value: unknown): IncomingContext | null {
+  if (typeof value !== "object" || value === null) return null;
+  const { today, region } = value as Record<string, unknown>;
+  if (typeof today !== "string" || !ISO_DATE.test(today)) return null;
+  if (region !== null && region !== "noord" && region !== "midden" && region !== "zuid") return null;
+  return { today, region };
+}
+
+function formatDutchDate(isoDate: string): string {
+  const [year, month, day] = isoDate.split("-").map(Number);
+  return `${day} ${MONTHS[month - 1]} ${year}`;
+}
+
+function buildHolidayContext({ today, region }: IncomingContext): string {
+  if (!region) {
+    return "De leerling heeft nog geen schoolvakantieregio ingesteld. Als de leerling naar vakanties vraagt, adviseer dan om de regio (Noord, Midden of Zuid) in de profielinstellingen te kiezen.";
+  }
+  const regionLabel = REGION_LABELS[region];
+  const regional = SCHOOL_HOLIDAYS.filter((holiday) => holiday.regions.includes(region));
+  const current = regional.find((holiday) => holiday.start <= today && today <= holiday.end);
+  if (current) {
+    return `Vandaag is ${formatDutchDate(today)}. De leerling zit nu in de ${current.name} (regio ${regionLabel}, van ${formatDutchDate(current.start)} t/m ${formatDutchDate(current.end)}). Er is geen school, dus de leerling kan de hele dag studeren. Geef concrete tips voor een goede studiedag met regelmatige pauzes en houd rekening met de vakantie.`;
+  }
+  const next = regional
+    .filter((holiday) => holiday.start > today)
+    .sort((a, b) => a.start.localeCompare(b.start))[0];
+  if (!next) {
+    return `Vandaag is ${formatDutchDate(today)}. Er is voor regio ${regionLabel} geen vakantie-informatie meer beschikbaar na de huidige lijst. Zeg dat de leerling de schoolgids moet raadplegen.`;
+  }
+  return `Vandaag is ${formatDutchDate(today)}. De leerling zit niet in vakantie (regio ${regionLabel}). De volgende vakantie is de ${next.name}, van ${formatDutchDate(next.start)} t/m ${formatDutchDate(next.end)}. Scholen kunnen van deze data afwijken.`;
 }
 
 function parseMessages(value: unknown): IncomingMessage[] | null {
@@ -53,6 +92,8 @@ Deno.serve(async (req: Request) => {
     const body = await req.json().catch(() => null);
     const messages = parseMessages(body?.messages);
     if (!messages) return json({ error: "Ongeldig bericht. Probeer het opnieuw." }, 400);
+    const context = parseContext(body?.context);
+    if (!context) return json({ error: "Ongeldige context. Probeer het opnieuw." }, 400);
 
     const upstream = await fetch(AI_URL, {
       method: "POST",
@@ -62,7 +103,10 @@ Deno.serve(async (req: Request) => {
       },
       body: JSON.stringify({
         model: AI_MODEL,
-        messages: [{ role: "system", content: SYSTEM_PROMPT }, ...messages],
+        messages: [
+          { role: "system", content: `${SYSTEM_PROMPT} ${buildHolidayContext(context)}` },
+          ...messages,
+        ],
         temperature: 0.4,
         max_tokens: 800,
       }),

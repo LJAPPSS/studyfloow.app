@@ -1,9 +1,11 @@
 import { supabase, SUPABASE_ANON_KEY, SUPABASE_URL } from '@/lib/supabase';
 import { UserFacingError } from '@/lib/errors';
+import type { SchoolRegion } from '@/types/study';
 
 export type AssistantMessage = { role: 'user' | 'assistant'; content: string };
+export type AssistantContext = { today: string; region: SchoolRegion | null };
 
-export async function askAssistant(messages: AssistantMessage[]): Promise<string> {
+export async function askAssistant(messages: AssistantMessage[], context: AssistantContext): Promise<string> {
   const { data } = await supabase.auth.getSession();
   const token = data.session?.access_token;
   if (!token) throw new UserFacingError('Je sessie is verlopen. Log opnieuw in.');
@@ -17,7 +19,7 @@ export async function askAssistant(messages: AssistantMessage[]): Promise<string
         apikey: SUPABASE_ANON_KEY,
         'Content-Type': 'application/json',
       },
-      body: JSON.stringify({ messages }),
+      body: JSON.stringify({ messages, context }),
     });
   } catch {
     throw new UserFacingError('Geen verbinding met de server. Controleer je internetverbinding.');

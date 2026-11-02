@@ -1,9 +1,11 @@
 import { supabase } from '@/lib/supabase';
+import type { SchoolRegion } from '@/types/study';
 
 export type ProfileInput = {
   display_name: string;
   school_level: string | null;
   school_grade: number | null;
+  school_region?: SchoolRegion | null;
 };
 
 export async function saveProfile(userId: string, input: ProfileInput): Promise<void> {
