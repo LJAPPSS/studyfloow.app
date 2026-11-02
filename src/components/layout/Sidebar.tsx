@@ -104,7 +104,7 @@ export function Sidebar({ activePage, collapsed, onToggleCollapsed, mobileOpen, 
             <span className="flex h-10 w-10 shrink-0 items-center justify-center rounded-xl border-[3px] border-outline bg-accent-600 shadow-hard-sm transition-transform duration-300 group-hover:-rotate-6 group-hover:scale-105 group-active:scale-95">
               <GraduationCap className="h-5 w-5 text-white" />
             </span>
-            {!collapsed && <span className="text-base font-semibold tracking-tight text-neutral-900 dark:text-neutral-50">StudyFlow</span>}
+            {!collapsed && <span className="text-base font-semibold tracking-tight text-neutral-900 dark:text-neutral-50">StudyFloow</span>}
           </button>
           {!collapsed && (
             <button

@@ -16,7 +16,7 @@ type TourStep = {
 
 const TOUR_STEPS: TourStep[] = [
   {
-    title: 'Welkom bij StudyFlow',
+    title: 'Welkom bij StudyFloow',
     body: 'Deze korte rondleiding laat zien waar je alles vindt. Je kunt hem op elk moment overslaan en later opnieuw starten via Hulp.',
     icon: GraduationCap,
   },

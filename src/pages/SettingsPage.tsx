@@ -121,7 +121,7 @@ function ProfilePanel() {
   };
 
   return (
-    <SettingsCard title="Profiel" description="Hoe StudyFlow je aanspreekt en op welk niveau je zit.">
+    <SettingsCard title="Profiel" description="Hoe StudyFloow je aanspreekt en op welk niveau je zit.">
       <form onSubmit={handleSubmit} className="space-y-5" noValidate>
         <Field label="Naam of bijnaam" htmlFor="profile-name" error={error}>
           <input id="profile-name" value={displayName} onChange={(event) => setDisplayName(event.target.value)} maxLength={60} className={inputClass} />
@@ -222,7 +222,7 @@ function AppearancePanel() {
           }}
         />
       </SettingsCard>
-      <SettingsCard title="Stijl" description="Kies de vormgeving van StudyFlow. Ook deze keuze wordt onthouden op dit apparaat.">
+      <SettingsCard title="Stijl" description="Kies de vormgeving van StudyFloow. Ook deze keuze wordt onthouden op dit apparaat.">
         <ChoiceGroup
           label="Stijl"
           options={styleOptions}

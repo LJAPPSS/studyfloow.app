@@ -66,12 +66,12 @@ export function AuthPage() {
           <div className="flex h-10 w-10 items-center justify-center rounded-xl border-[3px] border-outline bg-accent-600 shadow-hard-sm">
             <GraduationCap className="h-5 w-5 text-white" />
           </div>
-          <span className="text-lg font-bold tracking-tight">StudyFlow</span>
+          <span className="text-lg font-bold tracking-tight">StudyFloow</span>
         </div>
         <div className="relative max-w-md">
           <h1 className="text-5xl font-bold leading-[1.1] tracking-tight">Slim studeren voor al je examens.</h1>
           <p className="mt-5 text-base leading-relaxed text-neutral-700 dark:text-neutral-300">
-            StudyFlow brengt je leerstof, planning en studiehulp samen op een plek, zodat je precies weet wat je wanneer moet doen.
+            StudyFloow brengt je leerstof, planning en studiehulp samen op een plek, zodat je precies weet wat je wanneer moet doen.
           </p>
           <ul className="mt-10 space-y-4">
             {HIGHLIGHTS.map(({ icon: Icon, text }) => (
@@ -85,7 +85,7 @@ export function AuthPage() {
           </ul>
           <AuthHeroShapes />
         </div>
-        <p className="relative text-xs text-neutral-600">StudyFlow is gratis te gebruiken voor leerlingen.</p>
+        <p className="relative text-xs text-neutral-600">StudyFloow is gratis te gebruiken voor leerlingen.</p>
       </aside>
 
       <main className="flex items-center justify-center px-6 py-12 sm:px-12">
@@ -94,7 +94,7 @@ export function AuthPage() {
             <div className="flex h-10 w-10 items-center justify-center rounded-xl border-[3px] border-outline bg-accent-600 shadow-hard-sm">
               <GraduationCap className="h-5 w-5 text-white" />
             </div>
-            <span className="text-lg font-semibold tracking-tight">StudyFlow</span>
+            <span className="text-lg font-semibold tracking-tight">StudyFloow</span>
           </div>
 
           <h2 className="text-3xl font-bold tracking-tight text-ink">

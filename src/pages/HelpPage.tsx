@@ -23,7 +23,7 @@ const TOPICS: Record<HelpTab, HelpTopic[]> = {
 };
 
 const INTRO: Record<HelpTab, string> = {
-  guide: 'Stap voor stap uitgelegd hoe je de belangrijkste onderdelen van StudyFlow gebruikt.',
+  guide: 'Stap voor stap uitgelegd hoe je de belangrijkste onderdelen van StudyFloow gebruikt.',
   errors: 'Loop je ergens tegenaan? Hier vind je wat de meldingen betekenen en wat je kunt doen.',
 };
 

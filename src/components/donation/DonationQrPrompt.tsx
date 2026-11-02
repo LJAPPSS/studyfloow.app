@@ -38,7 +38,7 @@ export function DonationQrPrompt() {
       open={open}
       onClose={handleClose}
       title="Scan de QR-code"
-      description="Bedankt dat je StudyFlow gebruikt. Deze melding komt elke 4 dagen terug."
+      description="Bedankt dat je StudyFloow gebruikt. Deze melding komt elke 4 dagen terug."
       footer={
         <Button onClick={handleClose} loading={saving}>
           Sluiten

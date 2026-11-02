@@ -151,7 +151,7 @@ export function AvailabilityPanel() {
       </section>
 
       {data.availability.length === 0 ? (
-        <EmptyState icon={Clock} title="Nog geen blokken" description="Voeg studietijd of vaste verplichtingen toe, dan kan StudyFlow later je planning beter verdelen." />
+        <EmptyState icon={Clock} title="Nog geen blokken" description="Voeg studietijd of vaste verplichtingen toe, dan kan StudyFloow later je planning beter verdelen." />
       ) : (
         <div className="grid gap-6 lg:grid-cols-2">
           <BlockGroup title="Studietijd per week" blocks={weekly('studietijd')} onDelete={setToDelete} />

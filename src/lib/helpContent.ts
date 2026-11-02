@@ -7,7 +7,7 @@ export type HelpTopic = {
 export const HELP_GUIDE: HelpTopic[] = [
   {
     id: 'start',
-    question: 'Hoe start ik met StudyFlow?',
+    question: 'Hoe start ik met StudyFloow?',
     answer: [
       'Maak eerst je schooljaar en examenperiodes aan tijdens de start. Je kunt die later altijd aanpassen in Instellingen.',
       'Voeg daarna je vakken toe op de pagina Mijn vakken. Per vak kun je een kleur, moeilijkheid en je huidige zekerheid aangeven.',

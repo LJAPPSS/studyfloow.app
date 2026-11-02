@@ -277,7 +277,7 @@ export function OnboardingPage() {
             <span className="flex h-9 w-9 items-center justify-center rounded-2xl border-outline bg-accent-600 text-white shadow-hard-sm dark:bg-accent-500">
               <GraduationCap className="h-5 w-5" />
             </span>
-            <span className="text-lg font-semibold tracking-tight text-neutral-900 dark:text-neutral-50">StudyFlow</span>
+            <span className="text-lg font-semibold tracking-tight text-neutral-900 dark:text-neutral-50">StudyFloow</span>
           </div>
           <StepIndicator current={step} />
         </div>
@@ -286,7 +286,7 @@ export function OnboardingPage() {
           {step === 'profiel' && (
             <div className="space-y-6">
               <div>
-                <h1 className="text-2xl font-semibold tracking-tight text-neutral-900 dark:text-neutral-50">Welkom bij StudyFlow</h1>
+                <h1 className="text-2xl font-semibold tracking-tight text-neutral-900 dark:text-neutral-50">Welkom bij StudyFloow</h1>
                 <p className="mt-1.5 text-sm text-neutral-500 dark:text-neutral-400">Vertel kort iets over jezelf. Je kunt dit later altijd aanpassen.</p>
               </div>
               <Field label="Naam of bijnaam" htmlFor="ob-name">
