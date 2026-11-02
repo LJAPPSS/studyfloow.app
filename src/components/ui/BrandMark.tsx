@@ -10,10 +10,7 @@ export function BrandMark({ className }: BrandMarkProps) {
         strokeLinejoin="round"
         strokeLinecap="round"
       />
-      <path
-        d="M19.5 1.5L20.3 3.2L22 4L20.3 4.8L19.5 6.5L18.7 4.8L17 4L18.7 3.2Z"
-        fill="currentColor"
-      />
+      <circle cx="20.5" cy="2.8" r="1.4" fill="currentColor" />
     </svg>
   );
 }
